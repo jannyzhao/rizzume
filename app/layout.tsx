@@ -1,3 +1,4 @@
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -16,7 +17,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar position="absolute" style={{ background: "#2E3B55" }}>
+            <Toolbar>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Rizzume
+              </Typography>
+              <Button variant="outlined" color="primary">
+                Login
+              </Button>
+            </Toolbar>
+          </AppBar>
+        </Box>
+
+        {children}
+      </body>
     </html>
   );
 }

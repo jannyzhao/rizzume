@@ -8,7 +8,7 @@ import type { PDFDocumentProxy } from "pdfjs-dist";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
-  import.meta.url
+  import.meta.url,
 ).toString();
 
 const options = {
@@ -16,11 +16,11 @@ const options = {
   standardFontDataUrl: "/standard_fonts/",
 };
 
-const UploadForm = () => {
+const ScoreForm = () => {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [jobDescription, setJobDescription] = useState("");
   const [resumeFile, setResumeFile] = useState<string | File | undefined>(
-    undefined
+    undefined,
   );
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -97,4 +97,4 @@ const UploadForm = () => {
   );
 };
 
-export default UploadForm;
+export default ScoreForm;

@@ -1,9 +1,9 @@
-import UploadForm from "@/components/ScoreForm";
+import ScoreForm from "@/components/ScoreForm";
 
 const Score = () => {
   return (
     <div className="h-screen">
-      <UploadForm />
+      <ScoreForm />
     </div>
   );
 };

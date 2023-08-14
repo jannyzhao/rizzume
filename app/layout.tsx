@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="absolute" style={{ background: "#2E3B55" }}>
+          <AppBar position="fixed" style={{ background: "#2E3B55" }}>
             <Toolbar>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Rizzume

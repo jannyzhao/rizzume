@@ -21,6 +21,7 @@
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
     "next": "13.4.13",
+    "next-auth": "^4.23.0",
     "pdfreader": "3.0.1",
     "postcss": "8.4.27",
     "react": "18.2.0",
@@ -30,11 +31,11 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "raw-loader": "^4.0.2",
     "eslint-config-prettier": "^9.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.0",
-    "prettier": "3.0.1"
+    "prettier": "3.0.1",
+    "raw-loader": "^4.0.2"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

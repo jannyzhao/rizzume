@@ -1,7 +1,7 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import SignUpButton from "@/components/SignUpButton";
 
 export default function Home() {
   return (
@@ -15,9 +15,7 @@ export default function Home() {
           job search, enhance compatibility, and boost chances for success.
           Streamlined, tailored, effective.
         </Typography>
-        <Button variant="outlined" color="primary">
-          Get Started - It's free!
-        </Button>
+        <SignUpButton />
       </div>
     </Container>
   );

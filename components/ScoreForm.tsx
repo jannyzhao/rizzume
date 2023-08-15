@@ -23,7 +23,7 @@ const ScoreForm = () => {
   const [resumeFile, setResumeFile] = useState<File>();
   const [result, setResults] = useState<{
     score: number;
-    matchedKeywords: string[];
+    matchedKeywords: { keyword: string; count: number }[];
   }>();
 
   const onDocumentLoadSuccess = ({ numPages }: PDFDocumentProxy) => {

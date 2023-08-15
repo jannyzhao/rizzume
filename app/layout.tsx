@@ -2,6 +2,8 @@ import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import NextAuthSessionProvider from "./provider";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,34 +40,38 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="fixed" sx={{ zIndex: 2000 }}>
-            <Toolbar sx={{ backgroundColor: "background.paper" }}>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                color="primary"
-                sx={{ flexGrow: 1 }}
-              >
-                Rizzume
-              </Typography>
-              <Button variant="outlined" color="primary">
-                Login
-              </Button>
-            </Toolbar>
-          </AppBar>
-        </Box>
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            mt: ["48px", "56px", "64px"],
-            p: 3,
-          }}
-        >
-          {children}
-        </Box>
+        <NextAuthSessionProvider>
+          <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="fixed" sx={{ zIndex: 2000 }}>
+              <Toolbar sx={{ backgroundColor: "background.paper" }}>
+                {/* <Typography
+                  variant="h6"
+                  fontFamily="LeagueSpartan"
+                  noWrap
+                  component="div"
+                  color="primary"
+                  sx={{ flexGrow: 1 }}
+                >
+                  Rizzume
+                </Typography> */}
+                <Image src="/logo.png" alt="Logo" width={200} height={50} />
+                <Button variant="outlined" color="primary">
+                  Login
+                </Button>
+              </Toolbar>
+            </AppBar>
+          </Box>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              mt: ["48px", "56px", "64px"],
+              p: 3,
+            }}
+          >
+            {children}
+          </Box>
+        </NextAuthSessionProvider>
       </body>
     </html>
   );

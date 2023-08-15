@@ -19,9 +19,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="fixed" style={{ background: "#2E3B55" }}>
-            <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <AppBar position="fixed" sx={{ zIndex: 2000 }}>
+            <Toolbar sx={{ backgroundColor: "background.paper" }}>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                color="primary"
+                sx={{ flexGrow: 1 }}
+              >
                 Rizzume
               </Typography>
               <Button variant="outlined" color="primary">
@@ -30,8 +36,16 @@ export default function RootLayout({
             </Toolbar>
           </AppBar>
         </Box>
-
-        {children}
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            mt: ["48px", "56px", "64px"],
+            p: 3,
+          }}
+        >
+          {children}
+        </Box>
       </body>
     </html>
   );

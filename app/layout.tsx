@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NextAuthSessionProvider from "./provider";
 import Image from "next/image";
+import logo from "@/public/images/logo.png";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,7 +44,14 @@ export default function RootLayout({
         <NextAuthSessionProvider>
           <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed" sx={{ zIndex: 2000 }}>
-              <Toolbar sx={{ backgroundColor: "background.paper" }}>
+              <Toolbar
+                sx={{
+                  backgroundColor: "background.paper",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
                 {/* <Typography
                   variant="h6"
                   fontFamily="LeagueSpartan"
@@ -54,7 +62,7 @@ export default function RootLayout({
                 >
                   Rizzume
                 </Typography> */}
-                <Image src="/logo.png" alt="Logo" width={200} height={50} />
+                <Image src={logo} alt="Logo" width={150} />
                 <Button variant="outlined" color="primary">
                   Login
                 </Button>

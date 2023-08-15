@@ -52,16 +52,6 @@ export default function RootLayout({
                   justifyContent: "space-between",
                 }}
               >
-                {/* <Typography
-                  variant="h6"
-                  fontFamily="LeagueSpartan"
-                  noWrap
-                  component="div"
-                  color="primary"
-                  sx={{ flexGrow: 1 }}
-                >
-                  Rizzume
-                </Typography> */}
                 <Image src={logo} alt="Logo" width={150} />
                 <Button variant="outlined" color="primary">
                   Login

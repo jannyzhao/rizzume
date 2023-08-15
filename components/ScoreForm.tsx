@@ -41,27 +41,23 @@ const ScoreForm = () => {
       encType="multipart/form-data"
       className="flex flex-col w-full h-full justify-evenly items-center"
     >
-      <div className="flex w-full h-4/5 justify-evenly items-center">
+      <div className="flex w-full flex-col md:flex-row h-4/5 justify-evenly items-center">
         {/* JOB DESCRIPTION */}
-        <section className="flex flex-col gap-4 border border-white p-4 rounded-md h-full w-full m-4">
-          <h1 className="lg:text-3xl md:text-2xl sm:text-xl font-bold">
-            Job Description
-          </h1>
+        <section className="flex flex-col border-2 p-4 rounded-md h-full w-full m-4 ">
+          <h1 className="text-2xl lg:text-3xl font-bold">Job Description</h1>
           <textarea
             placeholder="Enter a Job Description"
             value={jobDescription}
             name="jobDescription"
             onChange={(e) => setJobDescription(e.target.value)}
-            className="w-full h-full resize-none p-4 font-light bg-black text-white rounded-md outline-none border border-white"
+            className="w-full h-full resize-none p-4 my-2 font-light rounded-md outline-blue-200 border-2"
             required
           />
         </section>
 
         {/* RESUME UPLOAD/PREVIEW */}
-        <section className="border border-white p-4 rounded-md h-full w-full m-4 overflow-scroll">
-          <h1 className="lg:text-3xl md:text-2xl sm:text-xl font-bold">
-            Resume Preview
-          </h1>
+        <section className="border-2 p-4 rounded-md h-full w-full m-4 overflow-scroll">
+          <h1 className="text-2xl lg:text-3xl font-bold">Resume Preview</h1>
           <input
             type="file"
             accept="application/pdf"
@@ -78,7 +74,11 @@ const ScoreForm = () => {
                 options={options}
               >
                 {Array.from(new Array(numPages), (el, index) => (
-                  <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+                  <Page
+                    key={`page_${index + 1}`}
+                    pageNumber={index + 1}
+                    className="border-2 rounded-md"
+                  />
                 ))}
               </Document>
             )}
@@ -89,7 +89,7 @@ const ScoreForm = () => {
       <div className="flex w-full justify-center items-center">
         <button
           type="submit"
-          className="bg-white text-black border px-5 py-3 rounded-md uppercase font-semibold transition duration-300 hover:bg-black hover:text-white hover:border-white"
+          className="bg-blue-500 text-white text-sm md:text-md border px-2 py-2 md:px-5 md:py-3 rounded-md uppercase font-semibold transition duration-300 hover:bg-blue-600"
         >
           Check Score
         </button>

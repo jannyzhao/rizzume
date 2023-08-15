@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import NextAuthSessionProvider from "./provider";
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,23 +43,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <NextAuthSessionProvider>
-          <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="fixed" sx={{ zIndex: 2000 }}>
-              <Toolbar
-                sx={{
-                  backgroundColor: "background.paper",
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Image src={logo} alt="Logo" width={150} />
-                <Button variant="outlined" color="primary">
-                  Login
-                </Button>
-              </Toolbar>
-            </AppBar>
-          </Box>
+          <Navbar />
           <Box
             component="main"
             sx={{

@@ -1,21 +1,5 @@
+import { generateScore, parsePdf } from "@/app/api/score/_utils";
 import { NextResponse } from "next/server";
-import { PdfReader } from "pdfreader";
-
-const parsePdf = async (pdfFile: File) => {
-  const resumeFileBuffer = Buffer.from(await pdfFile.arrayBuffer());
-  let pdfText = "";
-  return new Promise((resolve, reject) => {
-    new PdfReader({}).parseBuffer(resumeFileBuffer, (err, item) => {
-      if (err) {
-        reject(err);
-      } else if (!item) {
-        resolve(pdfText);
-      } else if (item.text) {
-        pdfText += item.text;
-      }
-    });
-  });
-};
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -25,6 +9,12 @@ export async function POST(request: Request) {
   if (!jobDescription) {
     return NextResponse.json(
       { error: "Missing job description" },
+      { status: 400 },
+    );
+  }
+  if (typeof jobDescription !== "string") {
+    return NextResponse.json(
+      { error: "Job description is not a string" },
       { status: 400 },
     );
   }
@@ -42,6 +32,6 @@ export async function POST(request: Request) {
   }
 
   const resumeText = await parsePdf(resumeFile);
-
-  return NextResponse.json({ resumeText, jobDescription }, { status: 200 });
+  const { score, matchedKeywords } = generateScore(resumeText, jobDescription);
+  return NextResponse.json({ score, matchedKeywords }, { status: 200 });
 }

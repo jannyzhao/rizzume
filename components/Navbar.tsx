@@ -1,13 +1,9 @@
-"use client";
-
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/images/logo.png";
-import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const router = useRouter();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ zIndex: 2000 }}>

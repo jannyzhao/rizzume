@@ -5,6 +5,7 @@ import { pdfjs, Document, Page } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import type { PDFDocumentProxy } from "pdfjs-dist";
+import ScoreResult from "./ScoreResult";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -17,42 +18,75 @@ const options = {
 };
 
 const ScoreForm = () => {
-  const [numPages, setNumPages] = useState<number | null>(null);
+  const [numPages, setNumPages] = useState<number>();
   const [jobDescription, setJobDescription] = useState("");
-  const [resumeFile, setResumeFile] = useState<string | File | undefined>(
-    undefined,
-  );
+  const [resumeFile, setResumeFile] = useState<File>();
+  const [result, setResults] = useState<{
+    score: number;
+    matchedKeywords: string[];
+  }>();
 
-  function onDocumentLoadSuccess({ numPages }: PDFDocumentProxy) {
+  const onDocumentLoadSuccess = ({ numPages }: PDFDocumentProxy) => {
     setNumPages(numPages);
-  }
+  };
 
-  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files && files[0]) {
       setResumeFile(files[0] || undefined);
     }
-  }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!resumeFile) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("jobDescription", jobDescription);
+    formData.append("resume", resumeFile);
+
+    const response = await fetch("/api/score", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    // Does not check for truthiness since score can be 0 and matchedKeywords can be empty.
+    if (data.score === undefined || !data.matchedKeywords === undefined) {
+      throw new Error("Invalid response from server");
+    }
+    setResults({ score: data.score, matchedKeywords: data.matchedKeywords });
+  };
 
   return (
     <form
-      action="/api/score"
-      method="post"
-      encType="multipart/form-data"
       className="flex flex-col w-full h-full justify-evenly items-center"
+      onSubmit={handleSubmit}
     >
       <div className="flex w-full flex-col md:flex-row h-4/5 justify-evenly items-center">
         {/* JOB DESCRIPTION */}
-        <section className="flex flex-col border-2 p-4 rounded-md h-full w-full m-4 ">
-          <h1 className="text-2xl lg:text-3xl font-bold">Job Description</h1>
-          <textarea
-            placeholder="Enter a Job Description"
-            value={jobDescription}
-            name="jobDescription"
-            onChange={(e) => setJobDescription(e.target.value)}
-            className="w-full h-full resize-none p-4 my-2 font-light rounded-md outline-blue-200 border-2"
-            required
-          />
+        <section className="flex flex-col border-2 p-4 rounded-md h-full w-full m-4 overflow-auto">
+          {result ? (
+            <ScoreResult
+              score={result.score}
+              matchedKeywords={result.matchedKeywords}
+            />
+          ) : (
+            <>
+              <h1 className="text-2xl lg:text-3xl font-bold">
+                Job Description
+              </h1>
+              <textarea
+                placeholder="Enter a Job Description"
+                value={jobDescription}
+                name="jobDescription"
+                onChange={(e) => setJobDescription(e.target.value)}
+                className="w-full h-full resize-none p-4 my-2 font-light rounded-md outline-blue-200 border-2"
+                required
+              />
+            </>
+          )}
         </section>
 
         {/* RESUME UPLOAD/PREVIEW */}

@@ -1,51 +1,5 @@
+import { generateScore, parsePdf } from "@/app/api/score/_utils";
 import { NextResponse } from "next/server";
-import { PdfReader } from "pdfreader";
-
-const parsePdf = async (pdfFile: File) => {
-  const resumeFileBuffer = Buffer.from(await pdfFile.arrayBuffer());
-  let pdfText = "";
-  return new Promise<string>((resolve, reject) => {
-    new PdfReader({}).parseBuffer(resumeFileBuffer, (err, item) => {
-      if (err) {
-        reject(err);
-      } else if (!item) {
-        resolve(pdfText);
-      } else if (item.text) {
-        pdfText += item.text;
-      }
-    });
-  });
-};
-
-const generateScore = (resumeText: string, jobDescription: string) => {
-  // TODO: Remove common unimportant english prepositions, e.g. "to", "and", etc.
-  const jobDescriptionKeywords = jobDescription
-    .replaceAll(/\s+/g, " ")
-    .split(" ");
-
-  // TODO: Remove this when we use OCR to read the resume text instead.
-  // Removes whitespace because pdf reader often adds whitespace in random places.
-  const whitespaceRemovedResumeText = resumeText.replaceAll(/\s+/g, "");
-
-  const matchedKeywords = jobDescriptionKeywords.reduce<string[]>(
-    (matches, keyword) => {
-      if (whitespaceRemovedResumeText.includes(keyword)) {
-        return [...matches, keyword];
-      }
-      return matches;
-    },
-    [],
-  );
-
-  const score = Math.round(
-    (matchedKeywords.length / jobDescriptionKeywords.length) * 100,
-  );
-
-  return {
-    matchedKeywords,
-    score,
-  };
-};
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -78,6 +32,6 @@ export async function POST(request: Request) {
   }
 
   const resumeText = await parsePdf(resumeFile);
-  const { matchedKeywords, score } = generateScore(resumeText, jobDescription);
-  return NextResponse.json({ matchedKeywords, score }, { status: 200 });
+  const { score, matchedKeywords } = generateScore(resumeText, jobDescription);
+  return NextResponse.json({ score, matchedKeywords }, { status: 200 });
 }

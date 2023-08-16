@@ -123,7 +123,7 @@ const ScoreForm = () => {
       <div className="flex w-full justify-center items-center">
         <button
           type="submit"
-          className="bg-blue-500 text-white text-sm md:text-md border px-2 py-2 md:px-5 md:py-3 rounded-md uppercase font-semibold transition duration-300 hover:bg-blue-600"
+          className="bg-pink-600 text-white text-sm md:text-md border px-2 py-2 md:px-5 md:py-3 rounded-md uppercase font-semibold transition duration-300 hover:bg-pink-700"
         >
           Check Score
         </button>

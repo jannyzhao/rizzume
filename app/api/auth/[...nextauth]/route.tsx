@@ -7,7 +7,7 @@ const authOptions: NextAuthOptions = {
       id: "descope",
       name: "Descope",
       type: "oauth",
-      wellKnown: `https://api.descope.com/P2U06w5vvSzA6NBqrv7tba9EhlkL/.well-known/openid-configuration`,
+      wellKnown: `https://api.descope.com/${process.env.DESCOPE_PROJECT_ID}/.well-known/openid-configuration`,
       authorization: { params: { scope: "openid email profile" } },
       idToken: true,
       clientId: process.env.DESCOPE_PROJECT_ID,
@@ -23,6 +23,11 @@ const authOptions: NextAuthOptions = {
       },
     },
   ],
+  callbacks: {
+    async redirect({ baseUrl }) {
+      return `${baseUrl}/score`;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

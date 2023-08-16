@@ -1,10 +1,8 @@
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NextAuthSessionProvider from "./provider";
-import Image from "next/image";
-import logo from "@/public/images/logo.png";
 import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });

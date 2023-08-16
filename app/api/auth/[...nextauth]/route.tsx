@@ -1,7 +1,7 @@
 import NextAuth from "next-auth/next";
 import { NextAuthOptions } from "next-auth";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     {
       id: "descope",
@@ -10,9 +10,8 @@ export const authOptions: NextAuthOptions = {
       wellKnown: `https://api.descope.com/P2U06w5vvSzA6NBqrv7tba9EhlkL/.well-known/openid-configuration`,
       authorization: { params: { scope: "openid email profile" } },
       idToken: true,
-      clientId: "P2U06w5vvSzA6NBqrv7tba9EhlkL",
-      clientSecret:
-        "K2U0OlUj2CtIt7E9aShYjy65ekZ0jl7kuLYXx34h8lBgkAXhfJcY2yWCtvCeaK04mbvRwdL",
+      clientId: process.env.DESCOPE_PROJECT_ID,
+      clientSecret: process.env.DESCOPE_ACCESS_KEY,
       checks: ["pkce", "state"],
       profile(profile) {
         return {

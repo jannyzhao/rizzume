@@ -8,21 +8,26 @@ import jobDescription from "@/public/images/job-description.png";
 
 export default function Home() {
   return (
-    <Container className="flex items-center justify-center h-screen">
-      <div>
-        <div className="flex gap-4">
+    <Container className="flex items-center justify-center h-screen gap-10">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <Image
             alt="Resume banner"
-            className="border rounded-md shadow-lg w-1/2"
+            className="border rounded-md shadow-lg w-full md:w-1/2"
             src={jobDescription}
           />
           <Image
             alt="Resume banner"
-            className="border rounded-md shadow-lg w-1/2"
+            className="border rounded-md shadow-lg w-full md:w-1/2"
             src={resume}
           />
         </div>
-        <Typography className="mt-8" component="h1" variant="h2">
+        <Typography
+          className="mt-10"
+          component="h1"
+          variant="h2"
+          sx={{ typography: { xs: "h5", sm: "h4", md: "h2" } }}
+        >
           How Much Rizz Does Your Resume Have?
         </Typography>
         <Typography variant="body1" sx={{ color: "gray" }} className="pb-4">
@@ -30,7 +35,9 @@ export default function Home() {
           job search, enhance compatibility, and boost chances for success.
           Streamlined, tailored, effective.
         </Typography>
-        <SignUpButton />
+        <div>
+          <SignUpButton />
+        </div>
       </div>
     </Container>
   );

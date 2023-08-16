@@ -7,7 +7,7 @@ export default function SignUpButton() {
   const router = useRouter();
   return (
     <Button
-      onClick={() => router.push("/api/auth/signin")}
+      onClick={() => router.push("/score")}
       variant="outlined"
       color="primary"
     >

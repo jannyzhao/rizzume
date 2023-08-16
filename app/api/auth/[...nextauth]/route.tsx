@@ -28,6 +28,7 @@ const authOptions: NextAuthOptions = {
       return `${baseUrl}/score`;
     },
   },
+  secret: process.env.SECRET_TOKEN,
 };
 
 const handler = NextAuth(authOptions);

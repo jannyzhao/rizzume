@@ -1,5 +1,6 @@
 import { generateScore, parsePdf } from "@/app/api/score/_utils";
 import { NextResponse } from "next/server";
+import getAIResponse from "./_utils/getAIResponse";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -33,5 +34,9 @@ export async function POST(request: Request) {
 
   const resumeText = await parsePdf(resumeFile);
   const { score, matchedKeywords } = generateScore(resumeText, jobDescription);
-  return NextResponse.json({ score, matchedKeywords }, { status: 200 });
+  const aiResponse = getAIResponse(resumeText, jobDescription);
+  return NextResponse.json(
+    { score, matchedKeywords, aiResponse },
+    { status: 200 },
+  );
 }

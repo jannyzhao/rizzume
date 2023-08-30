@@ -56,6 +56,7 @@ const ScoreForm = () => {
     if (data.score === undefined || !data.matchedKeywords === undefined) {
       throw new Error("Invalid response from server");
     }
+    console.log(data);
     setResults({ score: data.score, matchedKeywords: data.matchedKeywords });
   };
 

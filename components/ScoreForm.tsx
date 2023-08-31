@@ -6,6 +6,8 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import ScoreResult from "./ScoreResult";
+// import getAIResponse from "@/utils/getAIResponse";
+// import { parsePdf } from "@/utils/parsePdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -24,6 +26,7 @@ const ScoreForm = () => {
   const [result, setResults] = useState<{
     score: number;
     matchedKeywords: { keyword: string; count: number }[];
+    aiResponse: string;
   }>();
 
   const onDocumentLoadSuccess = ({ numPages }: PDFDocumentProxy) => {
@@ -45,7 +48,7 @@ const ScoreForm = () => {
 
     const formData = new FormData();
     formData.append("jobDescription", jobDescription);
-    formData.append("resume", resumeFile);
+    formData.append("resumeFile", resumeFile);
 
     const response = await fetch("/api/score", {
       method: "POST",
@@ -56,8 +59,12 @@ const ScoreForm = () => {
     if (data.score === undefined || !data.matchedKeywords === undefined) {
       throw new Error("Invalid response from server");
     }
-    console.log(data);
-    setResults({ score: data.score, matchedKeywords: data.matchedKeywords });
+
+    setResults({
+      score: data.score,
+      matchedKeywords: data.matchedKeywords,
+      aiResponse: data.aiResponse,
+    });
   };
 
   return (
@@ -72,6 +79,7 @@ const ScoreForm = () => {
             <ScoreResult
               score={result.score}
               matchedKeywords={result.matchedKeywords}
+              aiResponse={result.aiResponse}
             />
           ) : (
             <>

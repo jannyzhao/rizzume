@@ -5,7 +5,7 @@ import getAIResponse from "./_utils/getAIResponse";
 export async function POST(request: Request) {
   const formData = await request.formData();
   const jobDescription = formData.get("jobDescription");
-  const resumeFile = formData.get("resume");
+  const resumeFile = formData.get("resumeFile");
 
   if (!jobDescription) {
     return NextResponse.json(
@@ -20,21 +20,18 @@ export async function POST(request: Request) {
     );
   }
   if (!resumeFile) {
-    return NextResponse.json(
-      { error: "Missing resume file or not pdf" },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: "Missing resume text" }, { status: 400 });
   }
   if (typeof resumeFile === "string") {
     return NextResponse.json(
-      { error: "Resume file is not File type" },
+      { error: "Resume text is not a string" },
       { status: 400 },
     );
   }
 
   const resumeText = await parsePdf(resumeFile);
   const { score, matchedKeywords } = generateScore(resumeText, jobDescription);
-  const aiResponse = getAIResponse(resumeText, jobDescription);
+  const aiResponse = await getAIResponse(resumeText, jobDescription);
   return NextResponse.json(
     { score, matchedKeywords, aiResponse },
     { status: 200 },

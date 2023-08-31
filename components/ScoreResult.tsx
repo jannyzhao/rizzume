@@ -18,11 +18,26 @@ export const ScoreResult = ({ score, matchedKeywords, aiResponse }: Props) => {
       <LinearProgress variant="determinate" value={score} />
       <section className="mt-8">
         <Typography component="h2" variant="h6">
-          ✨ AI Generated Suggestions:
+          ✨ AI Feedback
         </Typography>
-        <Typography component="p">{aiResponse}</Typography>
+        <List className="pl-4">
+          {aiResponse.split("|").map((suggestion, index) => (
+            <ListItem
+              key={index}
+              sx={{
+                display: "list-item",
+                listStyleType: "circle",
+                padding: 0,
+                mb: 1,
+              }}
+            >
+              <strong>{suggestion.split(":")[0]}: </strong>
+              {suggestion.split(":")[1]}
+            </ListItem>
+          ))}
+        </List>
       </section>
-      <section className="mt-8">
+      <section className="mt-2">
         <Typography component="h2" variant="h6">
           Matched keywords
         </Typography>
